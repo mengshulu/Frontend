@@ -23,19 +23,17 @@
     <h2>加分題(1)</h2>
     <div class="nine-block bonus">
       <div
+        v-for="num in 4"
+        :key="num"
+        class="ball"
+      >
+        {{ num }}
+      </div>
+      <div
         v-for="num in 9"
         :key="num"
-        class="block"
-      >
-        <div class="box" />
-        <template v-if="showBallBlocks.includes(num)">
-          <div
-            class="ball"
-          >
-            {{ num }}
-          </div>
-        </template>
-      </div>
+        class="box"
+      />
     </div>
     <h2>加分題(2)</h2>
     <p>用迴圈產生 100顆球，計算每顆球的初始位置，操作 class name 來控制每顆球的可能的不同動畫效果和樣式。</p>
@@ -68,14 +66,14 @@
     background-color: #A5F12B;
   }
 
+  .box {
+    width: 200px;
+    height: 100px;
+    border: black solid 2px;
+    background: radial-gradient(circle, rgba(113,81,95,1) 81%, rgba(0,0,0,1) 100%);
+  }
+
   .block {
-    .box {
-      width: 200px;
-      height: 100px;
-      border: black solid 2px;
-      background: radial-gradient(circle, rgba(113,81,95,1) 81%, rgba(0,0,0,1) 100%);
-    }
-    
     &:nth-child(3),&:nth-child(5),&:nth-child(9) {
       .box {
         animation: changeOpacity 1s ease-in-out 0s infinite;
@@ -119,45 +117,41 @@
   @include nineBlock();
   position: relative;
 
-  .block {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    &:nth-child(1) .ball {
-      top: 50px;
-      left: 100px;
-    }
-    &:nth-child(3) .ball {
-      top: 50px;
-      left: 530px;
-    }
-    &:nth-child(7) .ball {
-      top: 280px;
-      left: 100px;
-    }
-    &:nth-child(9) .ball {
-      top: 280px;
-      left: 530px;
-    }
-  }
-
   .ball {
     position: absolute;
     transform: translate(-50%, -50%);
     animation: ballMove03 3s ease-in-out 0s infinite;
+    --top: 55px;
+    --bottom: 290px;
+    --left: 100px;
+    --right: 540px;
 
-
-    @keyframes ballMove03 {
-      0% {
-        // top: 0;
-        // left: 0;
-      }
-      100% {
-        position: absolute;
-        top: calc(100% - 15px);
-        left: calc(100% - 15px);
-      }
+    &:nth-child(1) {
+      top: var(--top);
+      left: var(--left);
+    }
+    &:nth-child(2) {
+      top: var(--top);
+      left: var(--right);
+    }
+    &:nth-child(3) {
+      top: var(--bottom);
+      left: var(--left);
+    }
+    &:nth-child(4) {
+      top:  var(--bottom);
+      left: var(--right);
+    }
+  }
+  @keyframes ballMove03 {
+    0% {
+      // top: 0;
+      // left: 0;
+    }
+    100% {
+      position: absolute;
+      top: calc(100% - 15px);
+      left: calc(100% - 15px);
     }
   }
 }
