@@ -24,8 +24,8 @@ jobs:
 
       # install node.js
       - uses: actions/setup-node@v3
-       with:
-        node-version: 16.x
+        with:
+          node-version: 16.x
 
       # Runs a single command using the runners shell
       - name: install dependencies
