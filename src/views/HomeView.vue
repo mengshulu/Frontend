@@ -25,7 +25,6 @@
       <div
         v-for="num in 9"
         :key="num"
-        :ref="(el) => blocks.push(el)"
         class="block"
       >
         <div class="box" />
