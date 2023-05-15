@@ -44,21 +44,6 @@
 <script setup lang="ts">
   import { ref, onMounted } from 'vue';
   const showBallBlocks:number[] = [1,3,7,9];
-  let blocks = ref<[]>([]);
-    
-  onMounted(() => {
-    console.log(blocks.value);
-
-    const lastBlocks:HTMLElement = blocks.value[blocks.value.length -1];
-    const lastX:number = lastBlocks.offsetTop + 100;
-    console.log('lastX: ', lastX);
-    const lastY:number = lastBlocks.offsetLeft + 200;
-    console.log('lastY: ', lastY);
-    blocks.value.forEach((el) => {
-      el.style.setProperty('--bottomY', lastY + "px");
-      el.style.setProperty('--bottomX', lastX + "px");
-    });
-  });
 
 </script>
 
