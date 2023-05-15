@@ -23,17 +23,20 @@
     <h2>加分題(1)</h2>
     <div class="nine-block bonus">
       <div
+        v-for="num in 9"
+        :key="num"
+        class="block"
+      >
+        <div class="box" />
+      </div>
+      <div
         v-for="num in 4"
         :key="num"
+        :class="`ball-${num}`"
         class="ball"
       >
         {{ num }}
       </div>
-      <div
-        v-for="num in 9"
-        :key="num"
-        class="box"
-      />
     </div>
     <h2>加分題(2)</h2>
     <p>用迴圈產生 100顆球，計算每顆球的初始位置，操作 class name 來控制每顆球的可能的不同動畫效果和樣式。</p>
@@ -126,19 +129,19 @@
     --left: 100px;
     --right: 540px;
 
-    &:nth-child(1) {
+    &-1 {
       top: var(--top);
       left: var(--left);
     }
-    &:nth-child(2) {
+    &-2 {
       top: var(--top);
       left: var(--right);
     }
-    &:nth-child(3) {
+    &-3 {
       top: var(--bottom);
       left: var(--left);
     }
-    &:nth-child(4) {
+    &-4 {
       top:  var(--bottom);
       left: var(--right);
     }
