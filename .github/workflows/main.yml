@@ -19,7 +19,7 @@ jobs:
     
     strategy:
       matrix:
-        node-version: [16.13.1]  # 把 node.js 版本記錄在這，之後可以重新取出作為 cache key
+        node-version: [16.x]  # 把 node.js 版本記錄在這，之後可以重新取出作為 cache key
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -40,8 +40,12 @@ jobs:
           key: node-modules-${{ runner.os }}-${{ matrix.node-version }}-${{ hashFiles('package-lock.json') }}
 
       # Runs a single command using the runners shell
-      - name: install dependencies
-        run: npm install
+      # - name: install dependencies
+      #   run: npm install
+
+      # https://docs.npmjs.com/cli/v8/commands/npm-ci
+      - name: Install Packages
+        run: test -d node_modules && echo "node_modules exists" || npm ci
 
       # Runs a single command using the runners shell
       - name: try to build the project
