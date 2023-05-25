@@ -29,7 +29,7 @@ jobs:
       # install node.js use v16  test1
       - uses: actions/setup-node@v3
         with:
-          node-version: 16.16.0
+          node-version: ${{ matrix.node-version }}
 
 
       - name: Cache Node Modules
