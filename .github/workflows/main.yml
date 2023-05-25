@@ -16,6 +16,10 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [16.13.1]  # 把 node.js 版本記錄在這，之後可以重新取出作為 cache key
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -26,6 +30,14 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16.x
+
+
+      - name: Cache Node Modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          # cache key 包含了所有我們希望固定的資訊：OS，node 版本，以及 package-lock.json 的檔案內容，使用 hashFiles 將檔案內容轉換成字串
+          key: node-modules-${{ runner.os }}-${{ matrix.node-version }}-${{ hashFiles('package-lock.json') }}
 
       # Runs a single command using the runners shell
       - name: install dependencies
