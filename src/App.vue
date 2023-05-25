@@ -4,7 +4,7 @@ import { RouterLink, RouterView } from 'vue-router'
 
 <template>
   <header>
-    test CI/CD cache.v2.0.1
+    test CI/CD cache.v2.0.2
   </header>
 
   <RouterView />
