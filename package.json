@@ -15,6 +15,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "firebase": "^9.22.1",
     "pinia": "^2.0.36",
     "sass": "^1.62.1",
     "vue": "^3.3.2",
