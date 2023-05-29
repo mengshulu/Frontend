@@ -20,6 +20,7 @@
     "firebase": "^9.22.1",
     "firebase-admin": "^11.8.0",
     "graphql": "^16.6.0",
+    "nodemon": "^2.0.22",
     "pinia": "^2.0.36",
     "sass": "^1.62.1",
     "vue": "^3.3.2",
