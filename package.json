@@ -2,7 +2,6 @@
   "name": "frontendtest",
   "version": "0.0.0",
   "private": true,
-  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check build-only",
@@ -16,7 +15,11 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "express": "^4.18.2",
+    "express-graphql": "^0.12.0",
     "firebase": "^9.22.1",
+    "firebase-admin": "^11.8.0",
+    "graphql": "^16.6.0",
     "pinia": "^2.0.36",
     "sass": "^1.62.1",
     "vue": "^3.3.2",
