@@ -1,37 +1,80 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs } from 'firebase/firestore';
-// import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+var express = require("express");
+var { graphqlHTTP } = require("express-graphql");
+var { buildSchema } = require("graphql");
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyDZvQUsq820RoWJkykVDUdfGFjNEi_byEk",
-  authDomain: "moolo-d568c.firebaseapp.com",
-  databaseURL: "https://moolo-d568c-default-rtdb.firebaseio.com",
-  projectId: "moolo-d568c",
-  storageBucket: "moolo-d568c.appspot.com",
-  messagingSenderId: "181611786461",
-  appId: "1:181611786461:web:01c449499eeee57525eb34",
-  measurementId: "G-P0JDGSGMR6"
-};
+const { initializeApp, applicationDefault, cert } = require('firebase-admin/app');
+const { getFirestore, Timestamp, FieldValue } = require('firebase-admin/firestore');
+
+const firebaseConfig = require('./apiKey.json'); // firebase token
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-// const analytics = getAnalytics(app);
-console.log("firebase");
+const fire_app = initializeApp(firebaseConfig);
 
-var db = getFirestore(app);
-console.log(db)
+const db = getFirestore(fire_app);
+console.log(db);
 
-const querySnapshot = await getDocs(collection(db, "meat"));
-querySnapshot.forEach((doc) => {
-  console.log(`${doc.id} => ${JSON.stringify(doc.data())}`);
-  console.log(`${doc.id} => ${doc.data()}`);
-});
-
+// firebase 取得資料範例
+// const querySnapshot = await getDocs(collection(db, "meat"));
+// querySnapshot.forEach((doc) => {
+//   console.log(`${doc.id} => ${JSON.stringify(doc.data())}`);
+//   console.log(`${doc.id} => ${doc.data()}`);
+// });
 // console.log(querySnapshot);
 
 
+// Construct a schema, using GraphQL schema language
+var schema = buildSchema(`
+  type Query {
+    hello: String
+  }
+`)
+
+// The root provides a resolver function for each API endpoint
+var root = {
+  hello: () => {
+    return "Hello world!"
+  },
+}
+
+var app = express();
+app.use(
+  "/graphql",
+  graphqlHTTP({
+    schema: schema,
+    rootValue: root,
+    graphiql: true,
+  })
+);
+
+// Construct a schema, using GraphQL schema language
+var schema_1 = buildSchema(`
+  type Query {
+    quoteOfTheDay: String
+    random: Float!
+    rollThreeDice: [Int]
+  }
+`)
+
+// The root provides a resolver function for each API endpoint
+var root_1 = {
+  quoteOfTheDay: () => {
+    return Math.random() < 0.5 ? "Take it easy" : "Salvation lies within"
+  },
+  random: () => {
+    return Math.random()
+  },
+  rollThreeDice: () => {
+    return [1, 2, 3].map(_ => 1 + Math.floor(Math.random() * 6))
+  },
+}
+app.use(
+  "/graphql_1",
+  graphqlHTTP({
+    schema: schema_1,
+    rootValue: root_1,
+    graphiql: true,
+  })
+);
+
+app.listen(4000);
+console.log("Running a GraphQL API server at http://localhost:4000/graphql");
