@@ -2,6 +2,9 @@
 require('@rushstack/eslint-patch/modern-module-resolution')
 
 module.exports = {
+  env: {
+    node: true // 解決非 .vue 文件報錯 error 'require' is not defined no-undef
+  },
   root: true,
   'extends': [
     'plugin:vue/vue3-recommended',
